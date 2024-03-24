@@ -8,3 +8,11 @@ spring:
     username: ${rds.useraname}
     password: ${rds.password}
     url: ${rds.host}
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update

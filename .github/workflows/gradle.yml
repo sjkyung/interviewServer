@@ -21,6 +21,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    # yml setting gitHubAction secrets
     - name: yml setFile
       uses: microsoft/variable-substitution@v1
       with:
