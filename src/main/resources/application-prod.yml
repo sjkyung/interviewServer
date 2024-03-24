@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
-    password: potendayjob0322!
-    url: jdbc:mysql://jobterviewee.cvquswweky2z.ap-northeast-2.rds.amazonaws.com/jobterviewee?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${rds.useraname}
+    password: ${rds.password}
+    url: ${rds.host}
 
   jpa:
     properties:
