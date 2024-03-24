@@ -5,7 +5,6 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root1234
-    url: jdbc:mysql://database-1.czamya2yi0yw.ap-northeast-2.rds.amazonaws.com:3306/demo?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-
+    username: ${rds.useraname}
+    password: ${rds.password}
+    url: ${rds.host}

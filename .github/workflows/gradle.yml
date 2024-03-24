@@ -29,6 +29,14 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+    - name: yml setFile
+      uses: microsoft/variable-substitution@v1
+      env:
+        - spring.datasource.url: ${{ secrets.RDS_HOST }}
+        - spring.datasource.username: ${{ secrets.RDS_USERNAME }}
+        - spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
+
+
       
     - name: web docker build and push
       run: |
