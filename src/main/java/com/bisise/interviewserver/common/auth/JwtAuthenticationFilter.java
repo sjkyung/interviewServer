@@ -1,7 +1,8 @@
-package com.bisise.interviewserver.common.exception;
+package com.bisise.interviewserver.common.auth;
 
 import com.bisise.interviewserver.common.auth.jwt.JwtProvider;
 import com.bisise.interviewserver.common.auth.jwt.JwtValidator;
+import com.bisise.interviewserver.common.exception.UnauthorizedException;
 import com.bisise.interviewserver.common.message.ErrorMessage;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -38,8 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         throw new UnauthorizedException(ErrorMessage.INVALID_ACCESS_TOKEN);
     }
 
-    private void doAuthentication(HttpServletRequest request, Long userId){
-       UserAuthentication userAuthentication = UserAuthentication.createUserAuthentication(userId);
+    private void doAuthentication(HttpServletRequest request, String email){
+       UserAuthentication userAuthentication = UserAuthentication.createUserAuthentication(email);
        createWebAndAuthentication(request, userAuthentication);
        SecurityContext context = SecurityContextHolder.getContext();
        context.setAuthentication(userAuthentication);

@@ -1,4 +1,4 @@
-package com.bisise.interviewserver.common.exception;
+package com.bisise.interviewserver.common.auth;
 
 import com.bisise.interviewserver.common.BaseResponse;
 import com.bisise.interviewserver.common.message.ErrorMessage;

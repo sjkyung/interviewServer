@@ -1,8 +1,7 @@
-package com.bisise.interviewserver.common.exception;
+package com.bisise.interviewserver.common.auth;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthoritiesContainer;
 
 import java.util.Collection;
 
@@ -12,7 +11,7 @@ public class UserAuthentication extends UsernamePasswordAuthenticationToken {
         super(principal, credentials, authorities);
     }
 
-    public static UserAuthentication createUserAuthentication(Long userId){
-        return new UserAuthentication(userId, null, null);
+    public static UserAuthentication createUserAuthentication(String email){
+        return new UserAuthentication(email, null, null);
     }
 }

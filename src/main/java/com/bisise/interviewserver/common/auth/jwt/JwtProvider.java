@@ -10,14 +10,14 @@ public class JwtProvider {
     private final JwtGenerator jwtGenerator;
 
 
-    public Token issueToken(Long userId){
-        return Token.of(jwtGenerator.generateToken(userId,true),
-                jwtGenerator.generateToken(userId, false));
+    public Token issueToken(String email){
+        return Token.of(jwtGenerator.generateToken(email,true),
+                jwtGenerator.generateToken(email, false));
 
     }
 
-    public Long getSubject(String token){
+    public String getSubject(String token){
         JwtParser jwtParser = jwtGenerator.getJwtParser();
-        return Long.valueOf(jwtParser.parseClaimsJws(token).getBody().getSubject());
+        return jwtParser.parseClaimsJws(token).getBody().getSubject();
     }
 }
