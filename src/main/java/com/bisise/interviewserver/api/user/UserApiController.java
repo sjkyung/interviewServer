@@ -9,12 +9,10 @@ import com.bisise.interviewserver.api.user.dto.response.UserSignUpResponse;
 import com.bisise.interviewserver.api.user.service.UserService;
 import com.bisise.interviewserver.common.ApiResponseUtil;
 import com.bisise.interviewserver.common.BaseResponse;
-import com.bisise.interviewserver.common.auth.UserId;
+import com.bisise.interviewserver.common.auth.UserEmail;
 import com.bisise.interviewserver.common.message.SuccessMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,9 +32,10 @@ public class UserApiController {
     private final UserService userService;
 
     @Operation(summary = "API 체크",
-            description = "회원 API 체크 splash")
+            description = "회원 API 체크 splash",
+            security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/splash")
-    public ResponseEntity<BaseResponse<?>> splash(@UserId final String email){
+    public ResponseEntity<BaseResponse<?>> splash(@Parameter(hidden = true) @UserEmail final String email){
         userService.splash(email);
         return ApiResponseUtil.success(SuccessMessage.OK);
     }
@@ -63,7 +62,7 @@ public class UserApiController {
             description = "회원 로그아웃 API",
             security = @SecurityRequirement(name = "Authorization"))
     @PatchMapping("/signOut")
-    public ResponseEntity<BaseResponse<?>> signOut(@UserId final String email) {
+    public ResponseEntity<BaseResponse<?>> signOut(@UserEmail final String email) {
         userService.signOut(email);
         return ApiResponseUtil.success(SuccessMessage.OK);
     }

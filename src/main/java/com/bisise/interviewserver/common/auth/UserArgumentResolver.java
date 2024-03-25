@@ -12,7 +12,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean hasUserIdAnnotation = parameter.hasParameterAnnotation(UserId.class);
+        boolean hasUserIdAnnotation = parameter.hasParameterAnnotation(UserEmail.class);
         boolean isLongType = String.class.isAssignableFrom(parameter.getParameterType());
         return hasUserIdAnnotation && isLongType;
     }

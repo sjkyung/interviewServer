@@ -18,6 +18,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static com.bisise.interviewserver.common.auth.UserAuthentication.createUserAuthentication;
+
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtValidator jwtValidator;
@@ -40,11 +42,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void doAuthentication(HttpServletRequest request, String email){
-       UserAuthentication userAuthentication = UserAuthentication.createUserAuthentication(email);
+       UserAuthentication userAuthentication = createUserAuthentication(email);
        createWebAndAuthentication(request, userAuthentication);
        SecurityContext context = SecurityContextHolder.getContext();
        context.setAuthentication(userAuthentication);
     }
+
 
     private void createWebAndAuthentication(HttpServletRequest request, UserAuthentication userAuthentication){
         WebAuthenticationDetailsSource webAuthenticationDetailsSource = new WebAuthenticationDetailsSource();
