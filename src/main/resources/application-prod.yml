@@ -16,7 +16,7 @@ spring:
 
 jwt:
   secret: ${jwt.secret}
-  access-token-expire-time: 60000 #1시간
+  access-token-expire-time: 3600000 #1시간
   refresh-token-expire-time: 86400000 #24시간
 
 
