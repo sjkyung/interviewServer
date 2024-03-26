@@ -5,14 +5,20 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
-    password: potendayjob0322!
-    url: jdbc:mysql://jobterviewee.cvquswweky2z.ap-northeast-2.rds.amazonaws.com/jobterviewee?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: root1234
+    url: jdbc:mysql://database-1.czamya2yi0yw.ap-northeast-2.rds.amazonaws.com/demo?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: redis
 
 jwt:
   secret: testtestetstesetsetstestetestsetsetse
@@ -25,5 +31,3 @@ jwt:
 springdoc:
   swagger-ui:
     enabled: true
-
-
