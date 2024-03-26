@@ -13,6 +13,8 @@ import com.bisise.interviewserver.common.auth.UserEmail;
 import com.bisise.interviewserver.common.message.SuccessMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -68,11 +70,13 @@ public class UserApiController {
     }
 
     @Operation(summary = "JWT 재발급 API",
-            security = @SecurityRequirement(name = "Authorization"))
+            parameters = {
+                    @Parameter(in = ParameterIn.HEADER, name = "X-Refresh-Token", required = true, description = "리프레시 토큰", schema = @Schema(type = "string"))
+            })
     @PostMapping("/reissue")
-    public ResponseEntity<BaseResponse<?>> reissue(HttpServletRequest HttpRequest, @RequestBody final UserReissueRequest request) {
+    public ResponseEntity<BaseResponse<?>> reissue(@RequestHeader("X-Refresh-Token") final String refreshToken, @RequestBody final UserReissueRequest request) {
         final UserSignUpResponse response = userService.reissue(
-                HttpRequest.getHeader("Authorization").substring("Bearer ".length()),
+                refreshToken,
                 request);
         return ApiResponseUtil.success(SuccessMessage.OK, response);
     }

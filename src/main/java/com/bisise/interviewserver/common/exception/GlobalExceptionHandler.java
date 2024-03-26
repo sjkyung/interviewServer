@@ -39,8 +39,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<BaseResponse<?>> handleHttpRequestMethodNotSupportedException(final HttpRequestMethodNotSupportedException e) {
         log.error(">>> handle: HttpRequestMethodNotSupportedException ", e);
-        return ApiResponseUtil.failure(ErrorMessage.METHOD_NOT_ALLOWED);
+        return ApiResponseUtil.failure(ErrorMessage.METHOD_NOT_FOUND);
     }
+
+    @ExceptionHandler(CommonException.class)
+    protected ResponseEntity<BaseResponse<?>> handleCommonException(final CommonException e){
+        log.error(">>> handle: commonException ", e);
+        return ApiResponseUtil.failure(e.getErrorMessage());
+    }
+
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<BaseResponse<?>> handleException(final Exception e) {
