@@ -39,4 +39,11 @@ public class JwtValidator {
         jwtParser.parseClaimsJws(token);
     }
 
+    public void equalsRefreshToken(String refreshToken,String redisRefreshToken){
+
+        if(!refreshToken.equals(redisRefreshToken)){
+            throw new UnauthorizedException(ErrorMessage.MISMATCH_REFRESH_TOKEN);
+        }
+    }
+
 }

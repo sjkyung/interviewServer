@@ -12,6 +12,8 @@ import com.bisise.interviewserver.common.auth.jwt.Token;
 import com.bisise.interviewserver.common.exception.EntityNotFoundException;
 import com.bisise.interviewserver.common.exception.UnauthorizedException;
 import com.bisise.interviewserver.common.message.ErrorMessage;
+import com.bisise.interviewserver.domain.redis.RefreshToken;
+import com.bisise.interviewserver.domain.redis.repository.RefreshTokenRepository;
 import com.bisise.interviewserver.domain.user.User;
 import com.bisise.interviewserver.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.bisise.interviewserver.domain.user.User.createUser;
+import static com.bisise.interviewserver.domain.redis.RefreshToken.createRefreshToken;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
     private final JwtValidator jwtValidator;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional(readOnly = true)
     public void splash(String email){
@@ -81,18 +85,34 @@ public class UserService {
 
     private void updateRefreshToken(Token token, User user){
         user.updateRefreshToken(token.refreshToken());
+        refreshTokenRepository.save(createRefreshToken(user.getEmail(),token.refreshToken()));
     }
 
     private void deleteRefreshToken(User user){
         user.updateRefreshToken(null);
+        refreshTokenRepository.deleteById(user.getEmail());
     }
 
     private void validateRefreshToken(String refreshToken, String userEmail) {
         try {
             jwtValidator.validateRefreshToken(refreshToken);
+            String redisRefreshToken = getRefreshToken(userEmail);
+            jwtValidator.equalsRefreshToken(refreshToken,redisRefreshToken);
         } catch (UnauthorizedException e) {
             signOut(userEmail);
             throw e;
         }
     }
+
+    private String getRefreshToken(String userEmail){
+        try{
+            RefreshToken refreshToken = refreshTokenRepository.findById(userEmail)
+                    .orElseThrow(()-> new EntityNotFoundException(ErrorMessage.REFRESH_TOKEN_NOT_FOUND));
+            return refreshToken.getRefreshToken();
+        }catch (EntityNotFoundException e){
+            User user = getUser(userEmail);
+            return user.getRefreshToken();
+        }
+    }
+
 }
