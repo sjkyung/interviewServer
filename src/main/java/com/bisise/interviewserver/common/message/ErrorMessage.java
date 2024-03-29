@@ -29,6 +29,7 @@ public enum ErrorMessage {
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "E4040", "대상을 찾을 수 없습니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "E4041", "존재하지 않는 회원입니다."),
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "E4042", "리프레쉬 토큰을 찾을 수 없습니다."),
+    ALREADY_IN_USE(HttpStatus.CONFLICT, "E4043", "이미 사용중인 닉네임 입니다."),
 
 
     METHOD_NOT_FOUND(HttpStatus.METHOD_NOT_ALLOWED, "E4050", "잘못된 HTTP method 요청입니다."),

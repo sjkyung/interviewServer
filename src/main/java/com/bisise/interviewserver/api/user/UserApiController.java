@@ -33,6 +33,14 @@ public class UserApiController {
 
     private final UserService userService;
 
+    @Operation(summary = "유저 닉네임 중복 체크",
+            description = "유저 닉네임 중복 체크")
+    @GetMapping("/nick")
+    public ResponseEntity<BaseResponse<?>> findNickname(String nickname){
+        userService.findNickname(nickname);
+        return ApiResponseUtil.success(SuccessMessage.OK);
+    }
+
     @Operation(summary = "API 체크",
             description = "회원 API 체크 splash",
             security = @SecurityRequirement(name = "Authorization"))
