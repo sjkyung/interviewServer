@@ -33,9 +33,10 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @Operation(summary = "API 체크",
-            description = "회원 API 체크 splash",
-            security = @SecurityRequirement(name = "Authorization"))
+    @Operation(
+            security = @SecurityRequirement(name = "Authorization"),
+            summary = "API 체크",
+            description = "회원 API 체크 splash")
     @GetMapping("/splash")
     public ResponseEntity<BaseResponse<?>> splash(@Parameter(hidden = true) @UserEmail final String email){
         userService.splash(email);
@@ -43,7 +44,8 @@ public class UserApiController {
     }
 
 
-    @Operation(summary = "회원 가입",
+    @Operation(
+            summary = "회원 가입",
             description = "회원 가입 API access token 반환")
     @PostMapping("/signUp")
     public ResponseEntity<BaseResponse<?>> signUpUser(@RequestBody UserSignUpRequest request){
@@ -52,7 +54,8 @@ public class UserApiController {
     }
 
 
-    @Operation(summary = "회원 로그인",
+    @Operation(
+            summary = "회원 로그인",
             description = "회원 로그인 API access token, refresh token 반환")
     @PostMapping("/signIn")
     public ResponseEntity<BaseResponse<?>> signInUser(@RequestBody UserSignInRequest request){
@@ -60,9 +63,10 @@ public class UserApiController {
         return ApiResponseUtil.success(SuccessMessage.OK,userSignInResponse);
     }
 
-    @Operation(summary = "회원 로그아웃 ",
-            description = "회원 로그아웃 API",
-            security = @SecurityRequirement(name = "Authorization"))
+    @Operation(
+            security = @SecurityRequirement(name = "Authorization"),
+            summary = "회원 로그아웃 ",
+            description = "회원 로그아웃 API")
     @PatchMapping("/signOut")
     public ResponseEntity<BaseResponse<?>> signOut(@UserEmail final String email) {
         userService.signOut(email);
