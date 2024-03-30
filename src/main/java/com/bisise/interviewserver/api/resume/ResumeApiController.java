@@ -4,6 +4,7 @@ import com.bisise.interviewserver.api.interview.dto.request.StartRequest;
 import com.bisise.interviewserver.api.interview.dto.response.StartResponse;
 import com.bisise.interviewserver.api.resume.dto.request.ResultRequest;
 import com.bisise.interviewserver.api.resume.dto.response.AnalysisResponse;
+import com.bisise.interviewserver.api.resume.dto.response.ResumeListResponse;
 import com.bisise.interviewserver.api.resume.service.ResumeService;
 import com.bisise.interviewserver.common.ApiResponseUtil;
 import com.bisise.interviewserver.common.BaseResponse;
@@ -80,7 +81,7 @@ public class ResumeApiController {
     )
     @GetMapping("list")
     public ResponseEntity<BaseResponse<?>> list(Long userId){
-        List<Resume> list = resumeService.list(userId);
+        List<ResumeListResponse> list = resumeService.list(userId);
         return ApiResponseUtil.success(SuccessMessage.OK,list);
     }
 }

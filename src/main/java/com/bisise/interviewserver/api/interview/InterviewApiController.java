@@ -3,6 +3,7 @@ package com.bisise.interviewserver.api.interview;
 import com.bisise.interviewserver.api.interview.dto.request.QuestionRequest;
 import com.bisise.interviewserver.api.interview.dto.request.InterviewResultRequest;
 import com.bisise.interviewserver.api.interview.dto.request.StartRequest;
+import com.bisise.interviewserver.api.interview.dto.response.ListResponse;
 import com.bisise.interviewserver.api.interview.dto.response.StartResponse;
 import com.bisise.interviewserver.api.interview.service.InterviewService;
 import com.bisise.interviewserver.common.ApiResponseUtil;
@@ -98,7 +99,7 @@ public class InterviewApiController {
     )
     @GetMapping("list")
     public ResponseEntity<BaseResponse<?>> list(Long userId){
-        List<Interview> list = interviewService.list(userId);
+        List<ListResponse> list = interviewService.list(userId);
         return ApiResponseUtil.success(SuccessMessage.OK,list);
     }
 }
