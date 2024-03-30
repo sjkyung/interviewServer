@@ -3,6 +3,7 @@ package com.bisise.interviewserver.api.interview.service;
 import com.bisise.interviewserver.api.interview.dto.request.QuestionRequest;
 import com.bisise.interviewserver.api.interview.dto.request.InterviewResultRequest;
 import com.bisise.interviewserver.api.interview.dto.request.StartRequest;
+import com.bisise.interviewserver.api.interview.dto.response.ListResponse;
 import com.bisise.interviewserver.api.interview.dto.response.StartResponse;
 import com.bisise.interviewserver.common.exception.EntityNotFoundException;
 import com.bisise.interviewserver.common.message.ErrorMessage;
@@ -69,7 +70,15 @@ public class InterviewService {
         ).forEach(interviewRepository::save);
     }
 
-    public List<Interview> list(Long userId){
-        return interviewRepository.findByUserId(userId);
+    public List<ListResponse> list(Long userId){
+        return interviewRepository.findByUserId(userId).stream().map(
+                entity -> {
+                    ListResponse listResponse = ListResponse.of(entity.getId(),
+                            entity.getQuestion(),
+                            entity.getAnswer(),
+                            entity.getPass());
+                    return listResponse;
+                }
+        ).toList();
     }
 }

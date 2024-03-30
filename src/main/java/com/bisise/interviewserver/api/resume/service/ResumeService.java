@@ -2,12 +2,11 @@ package com.bisise.interviewserver.api.resume.service;
 
 
 import com.bisise.interviewserver.api.interview.dto.request.StartRequest;
-import com.bisise.interviewserver.api.interview.dto.response.StartResponse;
 import com.bisise.interviewserver.api.resume.dto.request.ResultRequest;
 import com.bisise.interviewserver.api.resume.dto.response.AnalysisResponse;
+import com.bisise.interviewserver.api.resume.dto.response.ResumeListResponse;
 import com.bisise.interviewserver.common.exception.EntityNotFoundException;
 import com.bisise.interviewserver.common.message.ErrorMessage;
-import com.bisise.interviewserver.domain.interview.Interview;
 import com.bisise.interviewserver.domain.resume.Resume;
 import com.bisise.interviewserver.domain.resume.repository.ResumeRepository;
 import com.bisise.interviewserver.domain.user.User;
@@ -59,7 +58,15 @@ public class ResumeService {
         ).forEach(resumeRepository::save);
     }
 
-    public List<Resume> list(Long userId){
-        return resumeRepository.findByUserId(userId);
+    public List<ResumeListResponse> list(Long userId){
+        return resumeRepository.findByUserId(userId).stream().map(
+                entity -> {
+                    ResumeListResponse listResponse = ResumeListResponse.of(entity.getId(),
+                            entity.getQuestion(),
+                            entity.getAnswer(),
+                            entity.getAi_answer());
+                    return listResponse;
+                }
+        ).toList();
     }
 }
