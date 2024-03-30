@@ -35,15 +35,14 @@ public class SignInNormalService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.USER_NOT_FOUND));
         Token token = jwtProvider.issueToken(user.getPlatformId());
         user.updateRefreshToken(token.refreshToken());
-        return SignNormalResponse.of(token,user.getNick(),user.getCareerExperience(),user.getJobPosition(),user.getPlatformId(),user.getPlatform());
+        return SignNormalResponse.of(token,user.getUserId(), user.getNick(),user.getCareerExperience(),user.getJobPosition(),user.getPlatformId(),user.getPlatform());
     }
 
     public SignNormalResponse signUp(SignUpNormalRequest request) {
         User user = saveUser(request);
         Token token = jwtProvider.issueToken(user.getPlatformId());
         user.updateRefreshToken(token.refreshToken());
-//        updateRefreshToken(token,user);
-        return SignNormalResponse.of(token,user.getNick(),user.getCareerExperience(),user.getJobPosition(),user.getPlatformId(),user.getPlatform());
+        return SignNormalResponse.of(token,user.getUserId(),user.getNick(),user.getCareerExperience(),user.getJobPosition(),user.getPlatformId(),user.getPlatform());
     }
 
     private Optional<User> getUser(Long id){

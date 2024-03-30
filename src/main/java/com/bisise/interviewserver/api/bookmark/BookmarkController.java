@@ -26,6 +26,14 @@ public class BookmarkController {
         return ApiResponseUtil.success(SuccessMessage.OK,bookmarkService.getBookmarks(userId));
     }
 
+    @Operation(summary = "북마크 한 채용공고 삭제하기",
+            description = "북마크 한 채용공고 삭제하기")
+    @DeleteMapping
+    public ResponseEntity<BaseResponse<?>> deleteBookmark(@RequestParam Long userId, String positionId) {
+        bookmarkService.deleteBookmark(userId, positionId);
+        return ApiResponseUtil.success(SuccessMessage.OK);
+    }
+
     @Operation(summary = "채용공고 북마크",
             description = "채용공고 북마크")
     @PostMapping

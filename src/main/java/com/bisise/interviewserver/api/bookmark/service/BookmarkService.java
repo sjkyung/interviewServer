@@ -29,6 +29,11 @@ public class BookmarkService {
     }
 
     @Transactional
+    public void deleteBookmark(Long userId, String positionId) {
+        bookmarkRepository.deleteByUserUserIdAndRecruit_PositionId(userId,positionId);
+    }
+
+    @Transactional
     public void addBookmark(BookmarkRequest bookmarkRequest) {
         Recruit recruit = recruitRepository.save(
                 Recruit.createRecruit(bookmarkRequest.title(),
