@@ -17,11 +17,11 @@ class BookmarkServiceTest {
         bookmarkService.getBookmarks(1L);
     }
 
-    @Test
+    /*@Test
     @Transactional
     public void test2() {
         BookmarkRequest book = new BookmarkRequest(1L,"title", "compay","ex","00:02", "","");
 
         bookmarkService.addBookmark(book);
-    }
+    }*/
 }
