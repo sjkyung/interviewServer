@@ -57,14 +57,14 @@ public class SignController {
     @Operation(summary = "유저 로그인 정보 조회",
             description = "유저 로그인 정보 조회")
     @PostMapping("/sign-in")
-    public ResponseEntity<BaseResponse<?>> signIn(SignInNormalRequest request) {
+    public ResponseEntity<BaseResponse<?>> signIn(@RequestBody SignInNormalRequest request) {
         SignNormalResponse signUpNormalResponse = signInNormalService.signIn(request);
         return ApiResponseUtil.success(SuccessMessage.OK,signUpNormalResponse);
     }
     @Operation(summary = "유저 회원 가입",
             description = "유저 회원 가입")
     @PostMapping("/sign-up")
-    public ResponseEntity<BaseResponse<?>> signIn(SignUpNormalRequest request) {
+    public ResponseEntity<BaseResponse<?>> signIn(@RequestBody SignUpNormalRequest request) {
         SignNormalResponse signUpNormalResponse = signInNormalService.signUp(request);
         return ApiResponseUtil.success(SuccessMessage.OK, signUpNormalResponse);
     }
