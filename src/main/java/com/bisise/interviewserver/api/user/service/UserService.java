@@ -29,7 +29,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
     private final JwtValidator jwtValidator;
-    private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional(readOnly = true)
     public void splash(String email){
@@ -91,33 +90,18 @@ public class UserService {
 
     private void updateRefreshToken(Token token, User user){
         user.updateRefreshToken(token.refreshToken());
-        refreshTokenRepository.save(createRefreshToken(user.getEmail(),token.refreshToken()));
     }
 
     private void deleteRefreshToken(User user){
         user.updateRefreshToken(null);
-        refreshTokenRepository.deleteById(user.getEmail());
     }
 
     private void validateRefreshToken(String refreshToken, String userEmail) {
         try {
             jwtValidator.validateRefreshToken(refreshToken);
-            String redisRefreshToken = getRefreshToken(userEmail);
-            jwtValidator.equalsRefreshToken(refreshToken,redisRefreshToken);
         } catch (UnauthorizedException e) {
             signOut(userEmail);
             throw e;
-        }
-    }
-
-    private String getRefreshToken(String userEmail){
-        try{
-            RefreshToken refreshToken = refreshTokenRepository.findById(userEmail)
-                    .orElseThrow(()-> new EntityNotFoundException(ErrorMessage.REFRESH_TOKEN_NOT_FOUND));
-            return refreshToken.getRefreshToken();
-        }catch (EntityNotFoundException e){
-            User user = getUser(userEmail);
-            return user.getRefreshToken();
         }
     }
 

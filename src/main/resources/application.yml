@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
-    password: potendayjob0322!
-    url: jdbc:mysql://jobterviewee.cvquswweky2z.ap-northeast-2.rds.amazonaws.com/jobterviewee?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: root1234
+    url: jdbc:mysql://database-1.czamya2yi0yw.ap-northeast-2.rds.amazonaws.com/demo?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 
   jpa:
     show-sql: true
@@ -15,7 +15,7 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: localhost
+      host: 175.45.193.187
       port: 6379
   cache:
     type: redis
@@ -29,6 +29,17 @@ jwt:
 springdoc:
   swagger-ui:
     enabled: true
+
+
+# Feign Client logging
+logging:
+  level:
+    com.bisise.interviewserver.external.openfeign: debug
+
+openai:
+  url: https://api.openai.com/v1/chat/completions
+  model: gpt-3.5-turbo
+  apikey: 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
 
 # 소셜 로그인 API 정보
 provider:
@@ -56,3 +67,4 @@ provider:
     authorizationUri: https://nid.naver.com/oauth2.0/authorize? # 네이버 로그인 요청
     accessTokenUri: https://nid.naver.com/oauth2.0/token # 네이버 엑세스토큰 요청
     userInfoUri: https://openapi.naver.com/v1/nid/me # 네이버 유저 정보 요청
+

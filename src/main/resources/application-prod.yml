@@ -12,7 +12,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   data:
     redis:
       host: 175.45.193.187
@@ -31,3 +31,13 @@ jwt:
 springdoc:
   swagger-ui:
     enabled: true
+
+# Feign Client logging
+logging:
+  level:
+    com.bisise.interviewserver.external.openfeign: debug
+
+openai:
+  url: https://api.openai.com/v1/chat/completions
+  model: gpt-3.5-turbo
+  apikey: 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
