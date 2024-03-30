@@ -35,7 +35,12 @@ public class UserService {
         getUser(email);
     }
 
-
+    public void findNickname(String nickname) {
+        userRepository.findByNick(nickname)
+                .ifPresent((s) -> {
+                    throw new EntityNotFoundException(ErrorMessage.ALREADY_IN_USE);
+                });
+    }
 
     @Transactional
     public UserSignUpResponse signUp(UserSignUpRequest userSignUpRequest){
@@ -78,8 +83,9 @@ public class UserService {
 
 
     private User saveUser(UserSignUpRequest userSignUpRequest){
-        User user = createUser(userSignUpRequest.email());
-        return userRepository.save(user);
+        //User user = createUser(userSignUpRequest.email());
+        //return userRepository.save(user);
+        return null;
     }
 
     private void updateRefreshToken(Token token, User user){

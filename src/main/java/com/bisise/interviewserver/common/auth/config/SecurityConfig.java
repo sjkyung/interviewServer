@@ -26,6 +26,7 @@ public class SecurityConfig {
 
     private final String[] whiteList = {
             "/",
+            "/api/**",
             "/api/users/signIn",
             "/api/users/signUp",
             "/api/users/reissue",
