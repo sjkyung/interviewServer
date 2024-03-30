@@ -20,12 +20,14 @@ public class Interview {
     private User user;
     private String question;
     private String answer;
+    private String pass;
 
-    public static Interview createInterview(User user,String question,String answer){
+    public static Interview createInterview(User user,String question,String answer,String pass){
         Interview interview = Interview.builder()
                 .user(user)
                 .question(question)
                 .answer(answer)
+                .pass(pass)
                 .build();
 
         return interview;

@@ -2,5 +2,5 @@ package com.bisise.interviewserver.api.interview.dto.request;
 
 import java.util.List;
 
-public record ResultRequest(Long userId, List<Result> results) {
+public record InterviewResultRequest(Long userId, List<InterviewResult> results) {
 }

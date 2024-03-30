@@ -1,7 +1,7 @@
 package com.bisise.interviewserver.api.interview.service;
 
 import com.bisise.interviewserver.api.interview.dto.request.QuestionRequest;
-import com.bisise.interviewserver.api.interview.dto.request.ResultRequest;
+import com.bisise.interviewserver.api.interview.dto.request.InterviewResultRequest;
 import com.bisise.interviewserver.api.interview.dto.request.StartRequest;
 import com.bisise.interviewserver.api.interview.dto.response.StartResponse;
 import com.bisise.interviewserver.common.exception.EntityNotFoundException;
@@ -14,6 +14,8 @@ import com.bisise.interviewserver.external.openfeign.openai.OpenAiProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -25,13 +27,13 @@ public class InterviewService {
     //질문 + 면접 = 결과 반환 서비스
     public StartResponse startResponse(StartRequest startRequest){
 
-        String prompt = createPrompt(startRequest.question(), startRequest.answer());
+        String prompt = createAnswerPrompt(startRequest.question(), startRequest.answer());
         String openAiPrompt = openAiProvider.getOpenAiPrompt(prompt);
         return  StartResponse.of(openAiPrompt);
     }
 
-    private String createPrompt(String question, String answer){
-        String interviewStr = "\n면접관으로서 답변 분석해줘";
+    private String createAnswerPrompt(String question, String answer){
+        String interviewStr = "\n면접관으로서 답변 분석해줘 합격,불합격 결과도 알려줘";
         String prefixedQuestion = "질문 : ".concat(question);
         String prefixedAnswer   = "답변 : ".concat(answer);
         return prefixedQuestion.concat(prefixedAnswer).concat(interviewStr);
@@ -39,17 +41,18 @@ public class InterviewService {
 
     //질문 생성 서비스
     public StartResponse questionResponse(QuestionRequest questionRequest){
-        String prompt = createPrompt(questionRequest);
+        String prompt = createQuestionPrompt(questionRequest);
         String openAiPrompt = openAiProvider.getOpenAiPrompt(prompt);
         return StartResponse.of(openAiPrompt);
     }
 
-    private String createPrompt(QuestionRequest questionRequest){
-        return questionRequest.data().concat("\n면접 질문 내줘");
+    private String createQuestionPrompt(QuestionRequest questionRequest){
+        return questionRequest.data().concat("\n 기업의 인재상인 회사의 면접질문 한가지 내줘");
     }
 
 
-    public void result(ResultRequest resultRequest){
+    public void result(InterviewResultRequest resultRequest){
+
         User user = userRepository.findById(resultRequest.userId()).orElseThrow(() ->
                 new EntityNotFoundException(ErrorMessage.USER_NOT_FOUND));
 
@@ -58,11 +61,15 @@ public class InterviewService {
                      Interview interview = Interview.createInterview(
                             user,
                             result.question(),
-                            result.answer()
+                            result.answer(),
+                            result.pass()
                     );
                      return interview;
                 }
         ).forEach(interviewRepository::save);
+    }
 
+    public List<Interview> list(Long userId){
+        return interviewRepository.findByUserId(userId);
     }
 }

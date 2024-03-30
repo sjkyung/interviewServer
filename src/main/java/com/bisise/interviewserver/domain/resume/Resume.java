@@ -22,12 +22,14 @@ public class Resume {
     private User user;
     private String question;
     private String answer;
+    private String ai_answer;
 
-    public static Resume createResume(User user, String question, String answer){
+    public static Resume createResume(User user, String question, String answer,String ai_answer){
         Resume resume = Resume.builder()
                 .user(user)
                 .question(question)
                 .answer(answer)
+                .ai_answer(ai_answer)
                 .build();
         return  resume;
     }
