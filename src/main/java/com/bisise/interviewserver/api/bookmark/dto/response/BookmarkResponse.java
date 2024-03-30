@@ -11,7 +11,8 @@ public record BookmarkResponse (
         String company,
         String experienceRange,
         String deadline,
-        String thumbnail
+        String thumbnail,
+        String positionId
 ){
     public static BookmarkResponse of(Recruit recruit){
         return BookmarkResponse.builder()
@@ -21,6 +22,7 @@ public record BookmarkResponse (
                 .experienceRange(recruit.getExperienceRange())
                 .deadline(recruit.getDeadline())
                 .thumbnail(recruit.getThumbnail())
+                .positionId(recruit.getPositionId())
                 .build();
     }
 }
