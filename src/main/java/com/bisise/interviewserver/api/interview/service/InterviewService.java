@@ -34,7 +34,7 @@ public class InterviewService {
     }
 
     private String createAnswerPrompt(String question, String answer){
-        String interviewStr = "\n면접관으로서 답변 분석해줘 합격,불합격 결과도 알려줘";
+        String interviewStr = "\n면접관으로서 답변 분석해줘 마지막으로 합격,불합격 결과도 알려줘";
         String prefixedQuestion = "질문 : ".concat(question);
         String prefixedAnswer   = "답변 : ".concat(answer);
         return prefixedQuestion.concat(prefixedAnswer).concat(interviewStr);
