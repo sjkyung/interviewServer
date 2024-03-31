@@ -20,8 +20,11 @@ public class Resume {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(length = 2000)
     private String question;
+    @Column(length = 2000)
     private String answer;
+    @Column(length = 2000)
     private String ai_answer;
 
     public static Resume createResume(User user, String question, String answer,String ai_answer){

@@ -18,7 +18,9 @@ public class Interview {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(length = 2000)
     private String question;
+    @Column(length = 2000)
     private String answer;
     private String pass;
 
