@@ -25,7 +25,7 @@
 # Architecture
 ![jobterviewee](https://github.com/sjkyung/interviewServer/assets/97489787/a8b21b5a-c364-4b5a-8eb7-31120d2eff4c)
 # ERD
-![erd-jobterviewee](https://github.com/sjkyung/interviewServer/assets/97489787/502a6af7-8ace-4cc1-acb6-4772112fa0a0)
+![erd-jobterviewee (1)](https://github.com/sjkyung/interviewServer/assets/97489787/f833eaa0-80fd-45ad-ba4d-2cbdcb38561c)
 # Teck Stack
 <table>
   <thead>
