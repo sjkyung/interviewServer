@@ -23,7 +23,7 @@
 # API Docs
 잡터뷰이 서버 팀의 API 명세서가 궁금하다면?[🔗](https://www.notion.so/gpdnjsrj/API-Reference-ae8a8b27d7a84eef862860acdee438a0?pvs=4)
 # Architecture
-![jobterviewee](https://github.com/sjkyung/interviewServer/assets/97489787/a8b21b5a-c364-4b5a-8eb7-31120d2eff4c)
+![jobterviewee](https://github.com/sjkyung/interviewServer/assets/97489787/3ce3d761-5d88-4d0d-bef3-b38798467d38)
 # ERD
 ![erd-jobterviewee (1)](https://github.com/sjkyung/interviewServer/assets/97489787/f833eaa0-80fd-45ad-ba4d-2cbdcb38561c)
 # Teck Stack
