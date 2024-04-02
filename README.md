@@ -21,7 +21,7 @@
 </table>
 
 # API Docs
-잡터뷰이 서버 팀의 API 명세서가 궁금하다면?[🔗](https://www.notion.so/gpdnjsrj/API-Reference-ae8a8b27d7a84eef862860acdee438a0?pvs=4)
+잡터뷰이 서버 팀의 API 명세서가 궁금하다면?[🔗](https://gpdnjsrj.notion.site/API-Reference-ae8a8b27d7a84eef862860acdee438a0?pvs=4)
 # Architecture
 ![jobterviewee](https://github.com/sjkyung/interviewServer/assets/97489787/3ce3d761-5d88-4d0d-bef3-b38798467d38)
 # ERD
