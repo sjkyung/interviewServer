@@ -15,7 +15,7 @@ public enum SuccessMessage {
     OK(HttpStatus.OK,"S200","요청에 성공했습니다."),
 
     /**
-     * 201 Created
+     * 201 CREATED
       */
     CREATED(HttpStatus.CREATED,"S201","요청에 성공했습니다.");
 
