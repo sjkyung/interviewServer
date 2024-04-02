@@ -11,7 +11,7 @@ public class UserAuthentication extends UsernamePasswordAuthenticationToken {
         super(principal, credentials, authorities);
     }
 
-    public static UserAuthentication createUserAuthentication(String email){
-        return new UserAuthentication(email, null, null);
+    public static UserAuthentication createUserAuthentication(Long id){
+        return new UserAuthentication(id, null, null);
     }
 }

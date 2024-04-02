@@ -23,12 +23,12 @@ public class JwtGenerator {
     private long refreshTokenExpireTime;
 
 
-    public String generateToken(String email, boolean isAccessToken){
+    public String generateToken(Long userId, boolean isAccessToken){
         final Date now = generateDate();
         final Date expiration = generateExpiarationDate(now, isAccessToken);
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE,Header.JWT_TYPE)
-                .setSubject(email)
+                .setSubject(String.valueOf(userId))
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)

@@ -9,6 +9,7 @@ import com.bisise.interviewserver.api.user.dto.response.UserSignUpResponse;
 import com.bisise.interviewserver.common.auth.jwt.JwtProvider;
 import com.bisise.interviewserver.common.auth.jwt.JwtValidator;
 import com.bisise.interviewserver.common.auth.jwt.Token;
+import com.bisise.interviewserver.common.exception.ConflictException;
 import com.bisise.interviewserver.common.exception.EntityNotFoundException;
 import com.bisise.interviewserver.common.exception.UnauthorizedException;
 import com.bisise.interviewserver.common.message.ErrorMessage;
@@ -31,8 +32,8 @@ public class UserService {
     private final JwtValidator jwtValidator;
 
     @Transactional(readOnly = true)
-    public void splash(String email){
-        getUser(email);
+    public void splash(Long userId){
+        getUser(userId);
     }
 
     public void findNickname(String nickname) {
@@ -44,41 +45,48 @@ public class UserService {
 
     @Transactional
     public UserSignUpResponse signUp(UserSignUpRequest userSignUpRequest){
+        validateDuplicateUser(userSignUpRequest.email());
         User user = saveUser(userSignUpRequest);
-        Token token = jwtProvider.issueToken(user.getEmail());
+        Token token = jwtProvider.issueToken(user.getUserId());
         updateRefreshToken(token, user);
-        return UserSignUpResponse.of(token,user.getEmail());
+        return UserSignUpResponse.of(token,user.getUserId());
     }
 
     @Transactional
     public UserSignInResponse signIn(UserSignInRequest userSignInRequest){
         User user = getUser(userSignInRequest.email());
-        Token token = jwtProvider.issueToken(user.getEmail());
+        Token token = jwtProvider.issueToken(user.getUserId());
         updateRefreshToken(token,user);
-        return UserSignInResponse.of(token,user.getEmail());
+        return UserSignInResponse.of(token,user.getUserId());
     }
 
-    public void signOut(String email) {
-        User findUser = getUser(email);
+    public void signOut(Long userId) {
+        User findUser = getUser(userId);
         deleteRefreshToken(findUser);
     }
 
     @Transactional(noRollbackFor = UnauthorizedException.class)
     public UserSignUpResponse reissue(String refreshToken, UserReissueRequest request) {
-        String userEmail = request.email();
-        validateRefreshToken(refreshToken, userEmail);
-        User findUser = getUser(userEmail);
-        Token issueToken = jwtProvider.issueToken(userEmail);
+        Long userId = request.userId();
+        validateRefreshToken(refreshToken, userId);
+        User findUser = getUser(userId);
+        Token issueToken = jwtProvider.issueToken(userId);
         updateRefreshToken(issueToken, findUser);
-        return UserSignUpResponse.of(issueToken, findUser.getEmail());
+        return UserSignUpResponse.of(issueToken, findUser.getUserId());
     }
 
 
 
-    private User getUser(String email){
-        return userRepository.findByEmail(email)
+    private User getUser(String Email){
+        return userRepository.findByEmail(Email)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.USER_NOT_FOUND));
     }
+
+    private User getUser(Long userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.USER_NOT_FOUND));
+    }
+
 
 
 
@@ -96,12 +104,18 @@ public class UserService {
         user.updateRefreshToken(null);
     }
 
-    private void validateRefreshToken(String refreshToken, String userEmail) {
+    private void validateRefreshToken(String refreshToken, Long userId) {
         try {
             jwtValidator.validateRefreshToken(refreshToken);
         } catch (UnauthorizedException e) {
-            signOut(userEmail);
+            signOut(userId);
             throw e;
+        }
+    }
+
+    private void validateDuplicateUser(String email){
+        if(userRepository.existsUserByEmail(email)){
+            throw new ConflictException(ErrorMessage.DUPLICATE_USER);
         }
     }
 

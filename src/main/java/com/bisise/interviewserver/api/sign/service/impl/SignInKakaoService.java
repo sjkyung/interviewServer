@@ -50,13 +50,13 @@ public class SignInKakaoService implements SignService {
         Optional<User> user = getUser(kakaoUserInfoResponse.id());
         if (user.isPresent()) {
             User userInfo = user.get();
-            Token token = jwtProvider.issueToken(userInfo.getEmail());
+            Token token = jwtProvider.issueToken(userInfo.getUserId());
             updateRefreshToken(token,userInfo);
             return SignInResponse.of(token,userInfo.getPlatformId());
         }
         // Sign up
         String providerKey = USER_KEY_PREFIX_KAKAO + kakaoUserInfoResponse.id();
-        Token token = jwtProvider.issueToken(/*email이 없는 경우는 ? */ "email");
+        Token token = jwtProvider.issueToken(/*userId이 없는 경우는 ? */0L);
         saveUser(null, USER_KEY_PREFIX_KAKAO + kakaoUserInfoResponse.id()) ;
         return SignInResponse.of(token, providerKey);
     }

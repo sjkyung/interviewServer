@@ -9,7 +9,7 @@ import com.bisise.interviewserver.api.user.dto.response.UserSignUpResponse;
 import com.bisise.interviewserver.api.user.service.UserService;
 import com.bisise.interviewserver.common.ApiResponseUtil;
 import com.bisise.interviewserver.common.BaseResponse;
-import com.bisise.interviewserver.common.auth.UserEmail;
+import com.bisise.interviewserver.common.auth.UserId;
 import com.bisise.interviewserver.common.message.SuccessMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -46,8 +46,8 @@ public class UserApiController {
             description = "회원 API 체크 splash",
             security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/splash")
-    public ResponseEntity<BaseResponse<?>> splash(@Parameter(hidden = true) @UserEmail final String email){
-        userService.splash(email);
+    public ResponseEntity<BaseResponse<?>> splash(@Parameter(hidden = true) @UserId final Long userId){
+        userService.splash(userId);
         return ApiResponseUtil.success(SuccessMessage.OK);
     }
 
@@ -76,8 +76,8 @@ public class UserApiController {
             summary = "회원 로그아웃 ",
             description = "회원 로그아웃 API")
     @PatchMapping("/signOut")
-    public ResponseEntity<BaseResponse<?>> signOut(@UserEmail final String email) {
-        userService.signOut(email);
+    public ResponseEntity<BaseResponse<?>> signOut(@Parameter(hidden = true) @UserId final Long userId) {
+        userService.signOut(userId);
         return ApiResponseUtil.success(SuccessMessage.OK);
     }
 

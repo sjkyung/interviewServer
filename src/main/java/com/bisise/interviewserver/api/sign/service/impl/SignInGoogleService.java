@@ -47,14 +47,14 @@ public class SignInGoogleService implements SignService {
         Optional<User> user = getUser(Long.valueOf(googleUserInfoResponse.id()));
         if (user.isPresent()) {
             User userInfo = user.get();
-            Token token = jwtProvider.issueToken(userInfo.getEmail());
+            Token token = jwtProvider.issueToken(userInfo.getUserId());
             updateRefreshToken(token,userInfo);
             return SignInResponse.of(token,userInfo.getPlatformId());
         }
         // Sign up
         String providerKey = USER_KEY_PREFIX_GOOGLE + googleUserInfoResponse.id();
 
-        Token token = jwtProvider.issueToken("");
+        Token token = jwtProvider.issueToken(0L);
         saveUser(googleUserInfoResponse.email(), providerKey) ;
         return SignInResponse.of(token, providerKey);
     }

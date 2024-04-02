@@ -8,10 +8,11 @@ import com.bisise.interviewserver.api.interview.dto.response.StartResponse;
 import com.bisise.interviewserver.api.interview.service.InterviewService;
 import com.bisise.interviewserver.common.ApiResponseUtil;
 import com.bisise.interviewserver.common.BaseResponse;
+import com.bisise.interviewserver.common.auth.UserId;
 import com.bisise.interviewserver.common.message.SuccessMessage;
-import com.bisise.interviewserver.domain.interview.Interview;
 import com.bisise.interviewserver.external.openfeign.openai.OpenAiProvider;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,11 +33,6 @@ public class InterviewApiController {
     private final InterviewService interviewService;
     private final OpenAiProvider openAiProvider;
 
-
-    @PostMapping("test")
-    public String test(@RequestBody String prompt){
-        return openAiProvider.getOpenAiPrompt(prompt);
-    }
 
     @Operation(
             security = @SecurityRequirement(name = "Authorization"),
@@ -81,8 +77,8 @@ public class InterviewApiController {
                             content = @Content(schema = @Schema(implementation = BaseResponse.class)))}
     )
     @PostMapping("result")
-    public ResponseEntity<BaseResponse<?>> result(@RequestBody InterviewResultRequest request){
-        interviewService.result(request);
+    public ResponseEntity<BaseResponse<?>> result(@Parameter(hidden = true) @UserId Long userId,@RequestBody InterviewResultRequest request){
+        interviewService.result(userId,request);
         return ApiResponseUtil.success(SuccessMessage.CREATED);
     }
 
@@ -97,8 +93,8 @@ public class InterviewApiController {
                             description = "요청이 성공했습니다.",
                             content = @Content(schema = @Schema(implementation = BaseResponse.class)))}
     )
-    @GetMapping("list")
-    public ResponseEntity<BaseResponse<?>> list(Long userId){
+    @GetMapping()
+    public ResponseEntity<BaseResponse<?>> list(@Parameter(hidden = true) @UserId Long userId){
         List<ListResponse> list = interviewService.list(userId);
         return ApiResponseUtil.success(SuccessMessage.OK,list);
     }

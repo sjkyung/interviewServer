@@ -38,14 +38,13 @@ public class User {
 
     private String email;
 
-    public static User createUser(String nick,String careerExperience,String jobPosition,String platformId,PlatformType platform,String refreshToken){
+    public static User createUser(String nick,String careerExperience,String jobPosition,String platformId,PlatformType platform){
         return  User.builder()
                 .nick(nick)
                 .careerExperience(careerExperience)
                 .jobPosition(jobPosition)
                 .platformId(platformId)
                 .platform(platform)
-                .refreshToken(refreshToken)
                 .build();
     }
     public static User createSocialUser(String email,String platformId){

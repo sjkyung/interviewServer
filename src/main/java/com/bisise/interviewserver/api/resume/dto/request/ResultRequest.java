@@ -4,5 +4,5 @@ import com.bisise.interviewserver.api.resume.dto.request.Result;
 
 import java.util.List;
 
-public record ResultRequest(Long userId, List<Result> results) {
+public record ResultRequest(List<Result> results) {
 }

@@ -41,8 +41,8 @@ public class ResumeService {
     }
 
     @Transactional
-    public void result(ResultRequest resultRequest){
-        User user = userRepository.findById(resultRequest.userId()).orElseThrow(() ->
+    public void result(Long userId, ResultRequest resultRequest){
+        User user = userRepository.findById(userId).orElseThrow(() ->
                 new EntityNotFoundException(ErrorMessage.USER_NOT_FOUND));
 
         resultRequest.results().stream().map(

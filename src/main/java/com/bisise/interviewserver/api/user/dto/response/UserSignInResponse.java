@@ -7,13 +7,13 @@ import lombok.Builder;
 @Builder(access = AccessLevel.PRIVATE)
 public record UserSignInResponse(String accessToken,
                                  String refreshToken,
-                                 String email) {
+                                 Long userId) {
 
-    public static UserSignInResponse of(Token token, String email){
+    public static UserSignInResponse of(Token token, Long userId){
         return UserSignInResponse.builder()
                 .accessToken(token.accessToken())
                 .refreshToken(token.refreshToken())
-                .email(email)
+                .userId(userId)
                 .build();
     }
 }

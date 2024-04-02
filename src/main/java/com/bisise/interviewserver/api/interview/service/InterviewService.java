@@ -52,9 +52,9 @@ public class InterviewService {
     }
 
 
-    public void result(InterviewResultRequest resultRequest){
+    public void result(Long userId, InterviewResultRequest resultRequest){
 
-        User user = userRepository.findById(resultRequest.userId()).orElseThrow(() ->
+        User user = userRepository.findById(userId).orElseThrow(() ->
                 new EntityNotFoundException(ErrorMessage.USER_NOT_FOUND));
 
         resultRequest.results().stream().map(

@@ -8,13 +8,13 @@ import lombok.Builder;
 public record UserSignUpResponse(
         String accessToken,
         String refreshToken,
-        String email
+        Long userId
 ) {
-    public static UserSignUpResponse of(Token token, String email){
+    public static UserSignUpResponse of(Token token, Long userId){
         return UserSignUpResponse.builder()
                 .accessToken(token.accessToken())
                 .refreshToken(token.refreshToken())
-                .email(email)
+                .userId(userId)
                 .build();
     }
 

@@ -34,7 +34,7 @@ public class BookmarkService {
     }
 
     @Transactional
-    public void addBookmark(BookmarkRequest bookmarkRequest) {
+    public void addBookmark(Long userId ,BookmarkRequest bookmarkRequest) {
         Recruit recruit = recruitRepository.save(
                 Recruit.createRecruit(bookmarkRequest.title(),
                         bookmarkRequest.company(),
@@ -46,7 +46,7 @@ public class BookmarkService {
         );
         // 파라미터는 검증이 안되었는데 바로 insert? --> findById ?
         // JWT토큰에서 빼낸다면 ? --> 검증된 회원 ..
-        User user = User.createById(bookmarkRequest.userId());
+        User user = User.createById(userId);
         // 유저정보 , 채용공공정보 , 채용공고 정보 인서트
         bookmarkRepository.save(Bookmark.createBookmark(user, recruit));
     }

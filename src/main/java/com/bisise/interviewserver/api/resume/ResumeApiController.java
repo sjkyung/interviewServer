@@ -8,9 +8,11 @@ import com.bisise.interviewserver.api.resume.dto.response.ResumeListResponse;
 import com.bisise.interviewserver.api.resume.service.ResumeService;
 import com.bisise.interviewserver.common.ApiResponseUtil;
 import com.bisise.interviewserver.common.BaseResponse;
+import com.bisise.interviewserver.common.auth.UserId;
 import com.bisise.interviewserver.common.message.SuccessMessage;
 import com.bisise.interviewserver.domain.resume.Resume;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -63,8 +65,8 @@ public class ResumeApiController {
                             content = @Content(schema = @Schema(implementation = BaseResponse.class)))}
     )
     @PostMapping("result")
-    public ResponseEntity<BaseResponse<?>> result(@RequestBody ResultRequest request){
-        resumeService.result(request);
+    public ResponseEntity<BaseResponse<?>> result(@Parameter(hidden = true) @UserId Long userId, @RequestBody ResultRequest request){
+        resumeService.result(userId, request);
         return ApiResponseUtil.success(SuccessMessage.CREATED);
     }
 
@@ -80,7 +82,7 @@ public class ResumeApiController {
                             content = @Content(schema = @Schema(implementation = BaseResponse.class)))}
     )
     @GetMapping("list")
-    public ResponseEntity<BaseResponse<?>> list(Long userId){
+    public ResponseEntity<BaseResponse<?>> list(@Parameter(hidden = true) @UserId Long userId){
         List<ResumeListResponse> list = resumeService.list(userId);
         return ApiResponseUtil.success(SuccessMessage.OK,list);
     }

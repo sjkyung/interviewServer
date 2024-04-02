@@ -33,14 +33,14 @@ public class SignInNormalService {
     public SignNormalResponse signIn(SignInNormalRequest request) {
         User user = userRepository.findByPlatformId(request.platform() + "_" + request.platformId())
                 .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.USER_NOT_FOUND));
-        Token token = jwtProvider.issueToken(user.getPlatformId());
+        Token token = jwtProvider.issueToken(user.getUserId());
         user.updateRefreshToken(token.refreshToken());
         return SignNormalResponse.of(token,user.getUserId(), user.getNick(),user.getCareerExperience(),user.getJobPosition(),user.getPlatformId(),user.getPlatform());
     }
 
     public SignNormalResponse signUp(SignUpNormalRequest request) {
         User user = saveUser(request);
-        Token token = jwtProvider.issueToken(user.getPlatformId());
+        Token token = jwtProvider.issueToken(user.getUserId());
         user.updateRefreshToken(token.refreshToken());
         return SignNormalResponse.of(token,user.getUserId(),user.getNick(),user.getCareerExperience(),user.getJobPosition(),user.getPlatformId(),user.getPlatform());
     }
@@ -53,18 +53,17 @@ public class SignInNormalService {
                 signUpNormalRequest.careerExperience(),
                 signUpNormalRequest.jobPosition(),
                 signUpNormalRequest.platform()+"_"+signUpNormalRequest.platformId(),
-                signUpNormalRequest.platform(),
-                "");
+                signUpNormalRequest.platform());
         return userRepository.save(user);
     }
     private void updateRefreshToken(Token token, User user){
         user.updateRefreshToken(token.refreshToken());
-        refreshTokenRepository.save(createRefreshToken(user.getEmail(),token.refreshToken()));
+        refreshTokenRepository.save(createRefreshToken(user.getUserId(),token.refreshToken()));
     }
 
     private void deleteRefreshToken(User user){
         user.updateRefreshToken(null);
-        refreshTokenRepository.deleteById(user.getEmail());
+        refreshTokenRepository.deleteById(user.getUserId());
     }
 
 }
