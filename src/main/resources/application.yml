@@ -34,7 +34,7 @@ springdoc:
 # Feign Client logging
 logging:
   level:
-    com.bisise.interviewserver.external.openfeign: debug
+    com.beside.interviewserver.external.openfeign: debug
 
 openai:
   url: https://api.openai.com/v1/chat/completions
