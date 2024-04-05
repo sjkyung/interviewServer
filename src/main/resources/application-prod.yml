@@ -15,7 +15,7 @@ spring:
       ddl-auto: none
   data:
     redis:
-      host: 175.45.193.187
+      host: ${redis.host}
       port: 6379
   cache:
     type: redis
@@ -40,7 +40,7 @@ logging:
 openai:
   url: https://api.openai.com/v1/chat/completions
   model: gpt-3.5-turbo
-  apikey: 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
+  apikey: ${openai.apikey}
 
 # 소셜 로그인 API 정보
 provider:

@@ -32,6 +32,7 @@ jobs:
          spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
          jwt.secret: ${{ secrets.JWT_SECRET }}
          redis.host: ${{ secrets.REDIS_HOST }}
+         openai.apikey: ${{ secrets.OPENAI_APIKEY }}
 
     # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
