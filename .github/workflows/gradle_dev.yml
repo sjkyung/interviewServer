@@ -23,7 +23,7 @@ jobs:
 
     - name: create application.yml
       run: |
-        cd ./src/main/resources
+        cd src/main/resources
         touch ./application-dev.yml
         echo "$APPLICATION_DEV" > ./application-dev.yml
       env:
