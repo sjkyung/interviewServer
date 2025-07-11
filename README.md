@@ -21,7 +21,7 @@
 </table>
 
 # API Docs
-잡터뷰이 서버 팀의 API 명세서가 궁금하다면?[🔗](https://api.jobterviewee.site/swagger-ui/index.html)
+잡터뷰이 서버 팀의 API 명세서가 궁금하다면?[🔗](https://exuberant-robe-7c7.notion.site/API-Reference-1-1e3f537285fd81e3998ef0a6a26b23d4?pvs=74)
 # Architecture
 ![jobterviewee](https://github.com/sjkyung/interviewServer/assets/97489787/02fab4f2-a827-44b8-ab2f-e071638de3df)
 # ERD
